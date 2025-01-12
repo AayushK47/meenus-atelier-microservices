@@ -1,0 +1,23 @@
+{
+  "name": "auth",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Aayush Kurup <aayushkurup786@outlook.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "app.js",
+  "scripts": {
+    "build": "tsc",
+    "start:dev": "nodemon app.ts",
+    "start": "dist/auth/app.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^4.21.2",
+    "joi": "^17.13.3"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5",
+    "@types/express": "^5.0.0"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "meenus-atelier-microservices",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Aayush Kurup",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  },
+  "packageManager": "yarn@4.6.0",
+  "dependencies": {
+    "joi": "^17.13.3"
+  }
+}

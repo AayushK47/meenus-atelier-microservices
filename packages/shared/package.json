@@ -1,0 +1,11 @@
+{
+  "name": "shared",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Aayush Kurup <aayushkurup786@outlook.com>",
+  "homepage": "",
+  "license": "ISC",
+  "dependencies": {
+    "joi": "^17.13.3"
+  }
+}
