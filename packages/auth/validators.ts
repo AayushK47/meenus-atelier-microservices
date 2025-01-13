@@ -4,23 +4,28 @@ import { LoginParams, RegisterationParams } from './types'
 
 export const loginParamsDTO = Joi.object<LoginParams>({
   email: Joi.string().email().optional(),
-  mobile_number: Joi.string()
+  mobileNumber: Joi.string()
     .pattern(/^\d{10}$/)
     .optional(),
   otp: Joi.string().optional(),
+  password: Joi.string().optional()
 }).custom((value, helpers) => {
-  const { email, mobile_number, otp } = value
+  const { email, mobileNumber, otp, password } = value
 
-  if (email && mobile_number) {
+  if (email && mobileNumber) {
     return helpers.error('any.invalid', {
       message: 'Only one of email or mobile_number should be present.',
     })
   }
 
-  if (email || mobile_number) {
+  if (email || mobileNumber) {
     if (otp) {
       return helpers.error('any.invalid', {
         message: 'OTP should not be present if email or mobile_number is provided.',
+      })
+    } else if(!password) {
+      return helpers.error('any.invalid', {
+        message: 'Password is required',
       })
     }
   } else {

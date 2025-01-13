@@ -1,7 +1,8 @@
 export interface LoginParams {
-  email: string,
-  mobile_number: string,
+  email: string
+  mobileNumber: string
   otp: string
+  password: string
 }
 
 export interface RegisterationParams {
