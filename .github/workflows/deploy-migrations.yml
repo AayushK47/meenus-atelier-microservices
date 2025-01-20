@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-push:
+  run-migrations:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,6 +16,11 @@ jobs:
       
       - name: Install dependencies
         run: npm install
+      
+      - name: Debug environment
+        run: echo "DB_URL=$DB_URL"
+        env:
+          DB_URL: ${{ secrets.DB_URL }}
       
       - name: Run database migrations
         env:
