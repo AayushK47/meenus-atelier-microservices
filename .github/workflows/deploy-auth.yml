@@ -1,0 +1,23 @@
+name: Deploy auth migrations
+
+env:
+  APP_NAME: auth
+
+on:
+  push:
+    branches: [develop]
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+ 
+      - name: Build image and push to ghcr
+        run: |
+          docker login --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }} ghcr.io
+          docker build -t ghcr.io/aayushk47/ma-auth:latest --build-arg APP_PACKAGE_NAME="$APP_NAME" --build-arg APP_DB_URL="${{ secrets.DB_URL }}" .
+          docker push ghcr.io/aayushk47/ma-auth:latest
