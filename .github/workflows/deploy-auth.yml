@@ -1,0 +1,28 @@
+name: Deploy auth package
+
+env:
+  APP_NAME: auth
+
+on:
+  push:
+    branches: main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Build image and push to ghcr
+        run: |
+          docker build -t ghcr.io/AayushK47/ma-auth:latest --build-arg APP_PACKAGE_NAME="$APP_NAME" --build-arg APP_DB_URL="{{ secrets.DB_URL }}" .
+          echo "${{ secrets.GH_TOKEN }}" | docker login ghcr.io -u AayushK47 --password-stdin
+          docker push ghcr.io/AayushK47/ma-auth:latest
