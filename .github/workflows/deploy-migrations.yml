@@ -3,10 +3,6 @@ name: Deploy database migrations
 on:
   workflow_dispatch:
 
-permissions:
-  contents: read
-  secrets: write
-
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -26,7 +22,7 @@ jobs:
       
       # Step 4: Debug environment variables (optional, for verification)
       - name: Debug environment variables
-        run: env | grep DB_URL
+        run: echo "DB_URL=$DB_URL"
         env:
           DB_URL: ${{ secrets.DB_URL }}
       
