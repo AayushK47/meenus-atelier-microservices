@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import authRouter from './routes';
 import { config } from 'dotenv'
 
@@ -8,6 +8,6 @@ config()
 app.use(express.json());
 app.use(authRouter)
 
-app.listen(process.env.API_PORT, () => {
-  console.log(`Server is running on http://localhost:${process.env.API_PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on http://localhost:${process.env.PORT}`);
 });

@@ -43,6 +43,7 @@ export const registerParamsDTO = Joi.object<RegisterationParams>({
   firstName: Joi.string().required(),
   lastName: Joi.string().required(),
   email: Joi.string().email().required(),
+  mobileNumber: Joi.string().length(10),
   password: Joi.string().min(8).required(),
   confirmPassword: Joi.string().required().valid(Joi.ref('password'))
 })
