@@ -3,25 +3,34 @@ name: Deploy database migrations
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+  secrets: write
+
 jobs:
-  run-migrations:
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout the repository code
       - name: Checkout code
         uses: actions/checkout@v3
       
+      # Step 2: Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
       
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: npm install
       
-      - name: Debug environment
-        run: echo "DB_URL=$DB_URL"
+      # Step 4: Debug environment variables (optional, for verification)
+      - name: Debug environment variables
+        run: env | grep DB_URL
         env:
           DB_URL: ${{ secrets.DB_URL }}
       
+      # Step 5: Run database migrations
       - name: Run database migrations
         env:
           DB_URL: ${{ secrets.DB_URL }}
