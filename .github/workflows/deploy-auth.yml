@@ -1,4 +1,4 @@
-name: Deploy auth migrations
+name: Deploy auth package
 
 env:
   APP_NAME: auth
