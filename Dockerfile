@@ -5,24 +5,24 @@ ARG APP_PACKAGE_NAME
 ARG APP_PORT
 ARG APP_DB_URL
 
+ENV PACKAGE_NAME ${APP_PACKAGE_NAME}
+ENV PORT ${APP_PORT}
+ENV DB_URL ${APP_DB_URL}
+
 WORKDIR /app
 
 # required for some dependencies
 RUN apk add --no-cache python3 make g++ 
 
-COPY package.json package-lock.json
-
-RUN yarn install --workspace=${PACKAGE_NAME}
-
 COPY . .
+
+RUN npm install -w ${PACKAGE_NAME}
+
 
 RUN npx prisma generate
 
 RUN npm run build -w ${PACKAGE_NAME}
 
-ENV PACKAGE_NAME ${APP_PACKAGE_NAME}
-ENV PORT ${APP_PORT}
-ENV DB_URL ${APP_DB_URL}
 EXPOSE ${PORT}
 
 CMD npm run start -w ${PACKAGE_NAME}

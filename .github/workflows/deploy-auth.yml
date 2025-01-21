@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-push:
+  deploy-auth-package:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,3 +21,13 @@ jobs:
           docker login --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }} ghcr.io
           docker build -t ghcr.io/aayushk47/ma-auth:latest --build-arg APP_PACKAGE_NAME="$APP_NAME" --build-arg APP_DB_URL="${{ secrets.DB_URL }}" --build-arg APP_PORT="8000" .
           docker push ghcr.io/aayushk47/ma-auth:latest
+      - name: Install Render CLI
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/render-oss/cli/refs/heads/main/bin/install.sh | sh
+
+      - name: Trigger deployment on render
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          CI: true
+        run: |
+          render deploys create ${{ secrets.RENDER_SERVICE_ID }} --output json --confirm
