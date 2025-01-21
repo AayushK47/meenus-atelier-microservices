@@ -18,6 +18,7 @@ COPY . .
 
 RUN npx prisma generate
 
+RUN npm run build -w ${PACKAGE_NAME}
 
 ENV PACKAGE_NAME ${APP_PACKAGE_NAME}
 ENV PORT ${APP_PORT}
