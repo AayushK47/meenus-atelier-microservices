@@ -3,6 +3,8 @@ import { hash, compare } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
 import { prisma } from "../shared/db/connection";
 import { ulid } from "ulid";
+import { ConflictError } from "../shared/errors/conflict";
+import { UnauthorizedError } from "../shared/errors";
 
 export async function registerService(params: RegisterationParams) {
   const doesUserExist = await prisma.user.findFirst({
@@ -13,7 +15,7 @@ export async function registerService(params: RegisterationParams) {
   
   if(doesUserExist) {
     // Return error saying user already exists
-    throw {status: 409, message: "User already exists"}
+    throw new ConflictError("User already exists")
   }
 
   params.password = await hash(params.password, 10)
@@ -24,7 +26,10 @@ export async function registerService(params: RegisterationParams) {
     ulid: ulid()
   }})
 
-  const token = sign(user, "rdfghjkcfgvhfghgfhg", { expiresIn: '6h' })
+  const token = sign(
+    user, 
+    process.env.JWT_SECRET || 'secret', 
+    { expiresIn: process.env.JWT_EXPIRY || '6h' })
 
   user.password = ""
 
@@ -38,18 +43,17 @@ export async function loginService(params: LoginParams) {
     }
   })
 
-  if(!user) {
-    throw {status: 401, message: "Invalid credentials"}
-  }
-
   const doesPasswordMatch = await compare(params.password, user?.password || "")
 
-  if(!doesPasswordMatch) {
-    throw { status: 401, message: "Invalid credentials" }
+  if(!user || !doesPasswordMatch) {
+    throw new UnauthorizedError('Invalid credentials')
   }
 
-
-  const token = sign(user, "rdfghjkcfgvhfghgfhg", { expiresIn: '6h' })
+  const token = sign(
+    user, 
+    process.env.JWT_SECRET || 'secret', 
+    { expiresIn: process.env.JWT_EXPIRY || '6h' }
+  )
 
   return { token }
 }

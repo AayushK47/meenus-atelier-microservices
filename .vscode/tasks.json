@@ -1,0 +1,13 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "build:auth",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build:auth",
+			"detail": "npm run -w auth build"
+		}
+	]
+}
