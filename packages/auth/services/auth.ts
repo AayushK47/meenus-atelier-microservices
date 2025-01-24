@@ -1,10 +1,10 @@
-import { LoginParams, RegisterationParams } from "./types";
+import { LoginParams, RegisterationParams } from "../types";
 import { hash, compare } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
-import { prisma } from "../shared/db/connection";
+import { prisma } from "../../shared/db/connection";
 import { ulid } from "ulid";
-import { ConflictError } from "../shared/errors/conflict";
-import { UnauthorizedError } from "../shared/errors";
+import { ConflictError } from "../../shared/errors/conflict";
+import { UnauthorizedError } from "../../shared/errors";
 
 export async function registerService(params: RegisterationParams) {
   const doesUserExist = await prisma.user.findFirst({

@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { getRequestProperties } from '../shared/utils'
-import { loginParamsDTO, registerParamsDTO } from "./validators";
-import { loginService, registerService } from "./services";
-import { LoginParams, RegisterationParams } from "./types";
-import { ValidationError } from "../shared/errors";
+import { getRequestProperties } from '../../shared/utils'
+import { loginParamsDTO, registerParamsDTO } from "../validators/auth";
+import { loginService, registerService } from "../services/auth";
+import { LoginParams, RegisterationParams } from "../types";
+import { ValidationError } from "../../shared/errors";
 
 export async function register(req: Request, res: Response, next: NextFunction) {
   try {
