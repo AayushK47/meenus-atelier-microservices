@@ -6,10 +6,13 @@ import { ulid } from "ulid";
 import { ConflictError } from "../../shared/errors/conflict";
 import { UnauthorizedError } from "../../shared/errors";
 
-export async function registerService(params: RegisterationParams) {
+export async function registerService(params: RegisterationParams, role: string = 'user', sendToken: boolean = true) {
   const doesUserExist = await prisma.user.findFirst({
     where: {
-      email: params.email
+      email: params.email,
+      AND: {
+        role
+      }
     }
   })
   
@@ -25,21 +28,29 @@ export async function registerService(params: RegisterationParams) {
     ...params,
     ulid: ulid()
   }})
+  
+  user.password = ""
+
+  if(!sendToken) {
+    return user
+  }
 
   const token = sign(
     user, 
     process.env.JWT_SECRET || 'secret', 
-    { expiresIn: process.env.JWT_EXPIRY || '6h' })
-
-  user.password = ""
+    { expiresIn: process.env.JWT_EXPIRY || '6h' }
+  )
 
   return { token, user }
 }
 
-export async function loginService(params: LoginParams) {
+export async function loginService(params: LoginParams, role: string = 'user') {
   const user = await prisma.user.findFirst({
     where: {
-      email: params.email
+      email: params.email,
+      AND: {
+        role
+      }
     }
   })
 

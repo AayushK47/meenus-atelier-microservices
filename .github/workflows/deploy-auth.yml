@@ -4,8 +4,8 @@ env:
   APP_NAME: auth
 
 on:
-  # push:
-  #   branches: develop
+  push:
+    branches: develop
   workflow_dispatch:
 
 jobs:

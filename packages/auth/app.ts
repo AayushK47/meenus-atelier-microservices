@@ -7,8 +7,8 @@ const app = express();
 config()
 
 app.use(express.json());
-app.use(authRouter)
-app.use(adminRouter)
+app.use('/api', authRouter)
+app.use('/api/admin/', adminRouter)
 
 app.use(errorHandler)
 

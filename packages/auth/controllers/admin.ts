@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { getRequestProperties } from '@utils/index';
+import { getRequestProperties } from '../../shared/utils';
 import { adminLoginParamsDTO } from "../validators";
 import { AdminLoginParams } from "../types";
 import { ValidationError } from "../../shared/errors";
-import { adminLoginService } from "../services";
+import { loginService } from "../services";
+
 
 export async function adminLogin(req: Request, res: Response, next: NextFunction) {
   try {
@@ -21,7 +22,7 @@ export async function adminLogin(req: Request, res: Response, next: NextFunction
   
     value = value as AdminLoginParams
   
-    const result = await adminLoginService(value)
+    const result = await loginService(value, 'admin')
   
     res.status(200).json(result)
   } catch(error) {
