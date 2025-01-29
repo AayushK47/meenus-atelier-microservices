@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { LoginParams, RegisterationParams } from './types'
+import { LoginParams, RegisterationParams } from '../types'
 
 
 export const loginParamsDTO = Joi.object<LoginParams>({

@@ -5,11 +5,25 @@ export interface LoginParams {
   password: string
 }
 
+export interface AdminLoginParams {
+  email: string
+  password: string
+}
+
 export interface RegisterationParams {
-  firstName: string,
-  lastName: string,
-  email: string,
+  firstName: string
+  lastName: string
+  email: string
   mobileNumber: string
-  password: string,
+  password: string
+  confirmPassword?: string
+}
+
+export interface RegisterationParams {
+  firstName: string
+  lastName: string
+  email: string
+  mobileNumber: string
+  password: string
   confirmPassword?: string
 }

@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
 }
 
@@ -15,15 +15,16 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  ulid String @unique
-  firstName String   @map("first_name")
-  lastName  String   @map("last_name")
-  mobileNumber String @map("mobile_name")
-  email     String   @unique
-  password String 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @default(now()) @map("updated_at")
+  id           Int      @id @default(autoincrement())
+  ulid         String   @unique
+  firstName    String   @map("first_name")
+  lastName     String   @map("last_name")
+  mobileNumber String   @map("mobile_name")
+  email        String   @unique
+  password     String
+  role         String   @default("user")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @default(now()) @updatedAt @map("updated_at")
 
   @@map("users")
 }

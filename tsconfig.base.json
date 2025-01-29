@@ -7,7 +7,8 @@
     "rootDir": "packages",
     "strict": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap": true
   },
   "include": ["packages"],
   "exclude": [

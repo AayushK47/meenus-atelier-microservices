@@ -1,0 +1,56 @@
+import { NextFunction, Request, Response } from "express";
+import { getRequestProperties } from '../../shared/utils'
+import { loginParamsDTO, registerParamsDTO } from "../validators/auth";
+import { loginService, registerService } from "../services/auth";
+import { LoginParams, RegisterationParams } from "../types";
+import { ValidationError } from "../../shared/errors";
+
+export async function register(req: Request, res: Response, next: NextFunction) {
+  try {
+
+    const { body } = getRequestProperties(req)
+  
+    let { error, value } = registerParamsDTO.validate(body, { 
+      abortEarly: false 
+    });
+  
+    if(error) {
+      console.log('error', JSON.stringify(error))
+      throw new ValidationError(JSON.stringify({
+        'errors': error.details
+      }))
+    }
+  
+    value = value as RegisterationParams
+  
+    const result = await registerService(value)
+  
+    res.status(201).json(result)
+  } catch(error) {
+    next(error)
+  }
+}
+
+export async function login(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { body } = getRequestProperties(req)
+  
+    let { error, value } = loginParamsDTO.validate(body, { 
+      abortEarly: false 
+    });
+  
+    if(error) {
+      throw new ValidationError(JSON.stringify({
+        'errors': error.details
+      }))
+    }
+  
+    value = value as LoginParams
+  
+    const result = await loginService(value)
+  
+    res.status(200).json(result)
+  } catch(error) {
+    next(error)
+  }
+}
