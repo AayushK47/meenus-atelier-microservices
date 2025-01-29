@@ -6,6 +6,10 @@
   "homepage": "",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.21.2",
     "joi": "^17.13.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0"
   }
 }
